@@ -8,8 +8,10 @@
                 <div class="header">
                     
                     <h3 class="card-title">Procesos Registrados
-                        <a role="button"class="btn btn-primary pull-right" href="{{route('procesos.create')}}">+ Nuevo Proceso</a>    
-                        <a role="button"class="btn btn-primary pull-right" href="{{route('quantums.index')}}">+ Gestionar Quantum</a>    
+                        <a role="button"class="btn btn-primary pull-right" href="{{route('procesos.index')}}">- Volver</a> 
+                        @if($totalQuantums == 0)
+                        <a role="button"class="btn btn-primary pull-right" href="{{route('quantums.create')}}">+ Nuevo Quantum</a>    
+                        @endif
                     </h3>
                     
                 </div>
@@ -19,30 +21,23 @@
                         <table class="table table-condensed table-hover">
                             <thead>
                                 <tr>
-                                    <th>PID</th>
-                                    <th>Nombre del Proceso</th>
-                                    <th>Prioridad</th>
-                                    <th>Caracteres</th>
-                                    <th>cantidad de caracteres</th>
-                                    <th>Quantum</th>
+                                    <th>ID</th>
+                                    <th>Valor Quantums</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($procesos as $proceso)
+                                @foreach($quantums as $quantum)
                                     <tr>
-                                        <td>{{$proceso->id}}</td>
-                                        <td>{{$proceso->nombre}}</td>
-                                        <td>{{$proceso->prioridad}}</td>
-                                        <td>{{$proceso->caracteres}} </td>
-                                        <td>{{strlen($proceso->caracteres)}}</td>
-                                        <td>{{$proceso->valor}}</td>
+                                        <td>{{$quantum->id}}</td>
+                                        <td>{{$quantum->valor}}</td>
+                                        
                                         <td>
-                                            <a role="button"class="btn btn-warning" href="{{route('procesos.edit',$proceso->id)}}">Editar</a>    
+                                            <a role="button"class="btn btn-warning" href="{{route('quantums.edit',$quantum->id)}}">Editar</a>    
                                         </td>
                                         
                                         <td>
-                                        {!! Form::open(['route' => ['procesos.destroy', $proceso->id], 'method' => 'DELETE']) !!}
+                                        {!! Form::open(['route' => ['quantums.destroy', $quantum->id], 'method' => 'DELETE']) !!}
                                                     <button class="btn btn-danger">
                                                         Eliminar
                                                     </button>                           

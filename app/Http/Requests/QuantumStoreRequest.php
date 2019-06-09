@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProcesoStoreRequest extends FormRequest
+class QuantumStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,8 @@ class ProcesoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' =>'required',
-            'prioridad' =>'required',
-            'caracteres' =>'required',
-            'quanta_id'=>'required|exists:quanta,id'
+            'valor'=> 'required|numeric|min:0'
+            
         ];
     }
 }

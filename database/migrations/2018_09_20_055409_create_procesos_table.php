@@ -18,6 +18,8 @@ class CreateProcesosTable extends Migration
             $table->string('nombre');
             $table->integer('prioridad');
             $table->string('caracteres',255);
+            $table->integer('quanta_id')->unsigned()->default(0);
+            $table->foreign('quanta_id')->references('id')->on('quanta')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,5 +32,7 @@ class CreateProcesosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('procesos');
+        $table->dropForeign('procesos_quanta_id_foreign');
+
     }
 }

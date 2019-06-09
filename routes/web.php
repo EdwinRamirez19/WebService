@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/procesos.index', 'ProcesoController@index')->name('home');
 
 Route::resource('procesos','ProcesoController');
+Route::resource('quantums','QuantumController');

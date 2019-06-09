@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proceso;
+use App\Quantum;
 use App\Http\Requests\ProcesoStoreRequest;
 use App\Http\Requests\ProcesoUpdateRequest;
 class ProcesoController extends Controller
@@ -17,8 +18,19 @@ class ProcesoController extends Controller
     
     public function index()
     {
-        $procesos = Proceso::all();
-        return view('procesos.index',compact('procesos'));
+        $procesos = \DB::table('procesos')
+        ->join('quanta','quanta.id','=','procesos.quanta_id')
+        ->select(\DB::raw("procesos.*,quanta.valor"))
+        ->orderBy('nombre','ASC')
+        ->get();
+
+        $contarCaracteres = \DB::table('procesos')->select('caracteres')->get();
+        $total = strlen($contarCaracteres);
+        
+        
+
+    
+        return view('procesos.index',compact('procesos','total'));
     }
 
     /**
@@ -29,7 +41,9 @@ class ProcesoController extends Controller
     public function create()
     {
         $proceso = null;
-        return view('procesos.create',compact('proceso'));
+        $quantum = Quantum::pluck('valor','id');
+        
+        return view('procesos.create',compact('proceso','quantum'));
     }
 
     /**

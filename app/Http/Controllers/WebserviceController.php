@@ -13,8 +13,12 @@ class WebserviceController extends Controller
      */
     public function index()
     {
-        $proceso = Proceso::orderBy('prioridad','ASC')->get();
-        return $proceso;
+        $procesos = \DB::table('procesos')
+        ->join('quanta','quanta.id','=','procesos.quanta_id')
+        ->select(\DB::raw("procesos.*,quanta.valor"))
+        ->orderBy('nombre','ASC')
+        ->get();
+        return response()->json($procesos);
     }
 
     public function store(Request $request)
